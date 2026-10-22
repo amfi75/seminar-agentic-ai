@@ -1,0 +1,30 @@
+#cloud-config
+package_update: true
+packages:
+  - openssh-client
+  - ca-certificates
+  - curl
+  - git
+  - python3
+  - iproute2
+  - iputils-ping
+  - tcpdump
+  - jq
+  - docker.io
+groups:
+  - docker
+users:
+  - default
+  - name: agent
+    gecos: Restricted seminar agent
+    shell: /bin/bash
+    lock_passwd: true
+  - name: student
+    gecos: Human seminar student
+    groups: docker
+    shell: /bin/bash
+    lock_passwd: true
+runcmd:
+  - [systemctl, enable, --now, docker]
+  - [sh, -c, 'install -d -o agent -g agent -m 0700 /home/agent/experiment']
+final_message: "Seminar guest base provisioning finished."

@@ -1,0 +1,530 @@
+{
+  "edition": "student",
+  "files": [
+    {
+      "bytes": 195,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": ".gitignore",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "ac5a1fa22c07e2d796e1fdcbf6eadcb9e2297784cfcc2921a72164ea80f49fd6"
+    },
+    {
+      "bytes": 3127,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "README.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "e3e86229f8eda7550fc2cdebb7958abaa9064eeb9ca46aca9dfe1ca62d47eceb"
+    },
+    {
+      "bytes": 1627,
+      "mode": 420,
+      "ownership": "generated",
+      "path": "STUDENT-FILES.txt",
+      "reason": "Exact source-transfer list, including provenance metadata",
+      "sha256": "a06dd96d0cf6f9229670304326265347bd99214663f2efb9e002eb059b58a0e7"
+    },
+    {
+      "bytes": 9786,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "broker/labctl_v5.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "2be16500c915b3202e541bddd472e94ced05eacdc8642aa5b30cd3b7890ce9ba"
+    },
+    {
+      "bytes": 1427,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "docs/architecture.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "67f93c5c0e6d7279cc04c5d3b01f57b3a538d1277c50df0fed12c6e9fab247ad"
+    },
+    {
+      "bytes": 3674,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "docs/quickstart.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "d73aea9f15f1b573fc0f7c808af5ed8f19ff560412079b9878c2982c50838a54"
+    },
+    {
+      "bytes": 1192,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "docs/source-maintenance.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "1a8908a634f3b9b1500db4b368b3551d39ee4520d3e0665913d74304eccbcdc4"
+    },
+    {
+      "bytes": 3674,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "docs/start-here.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "d73aea9f15f1b573fc0f7c808af5ed8f19ff560412079b9878c2982c50838a54"
+    },
+    {
+      "bytes": 1610,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "docs/troubleshooting.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "54a297d9990b58015c602709861900a08f228028d88aae5dd6a0d844fb7f3e55"
+    },
+    {
+      "bytes": 1005,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/archive_home.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "bae23f21166ecd0552f0c43fb44789a16b8017d5c8617008778ffff967e54309"
+    },
+    {
+      "bytes": 6247,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/bootstrap_devices.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "16e688953d8cee46dc49a7ac096b60fb622c98dad186c560dabc76e76c80f595"
+    },
+    {
+      "bytes": 3005,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/collect.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "fc2f1c347d8dc3a014d533d1879e1baa4520a7eea105af4a7656d467a7ee0e19"
+    },
+    {
+      "bytes": 1454,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/configure_collectors.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "70d709808bb814807b8e780337abcf217eb5a407b1dde1b0082b8782e2a335c2"
+    },
+    {
+      "bytes": 4580,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/device_api.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "e239f7a4ab91365977b122cab8c5e51a4c496d0889aab07ea997e2a064c4dc96"
+    },
+    {
+      "bytes": 1147,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/fresh_management.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "8df09be10d57c993e49dc4a7cdd8fc675d7e062ff4a8c9086456ae89b8dccb6d"
+    },
+    {
+      "bytes": 531,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/fresh_trial_entry.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "6b869e3e70237cd4d96fda00ac7566deeb92e20642c900e5d927f47d7f0788ca"
+    },
+    {
+      "bytes": 795,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/install_controller.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "01a57a99f66da04c2ff56878444cf817bbc82d5641c6de92dc4149056076b53d"
+    },
+    {
+      "bytes": 7633,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/install_workflow.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "74aebb21b99a3791525e42fa5a85b9e9fcbc3c6a1612cc7141e752780cf18cd3"
+    },
+    {
+      "bytes": 7180,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/native_payload.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "436715a8e80331cda3f29d19c01fb2a12918c0269e94a99e1c1cd9020dfb7f8a"
+    },
+    {
+      "bytes": 2618,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/network_boundary.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "ad83ebdf1b72afdba1e617ce19ec37d63e2824c35c97e5967138d3c4aea9c4e7"
+    },
+    {
+      "bytes": 4732,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/prepare_management.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "8f2dfc4a535947b7c718eec4304d1aa1d98d827ab349130734e935f558de552d"
+    },
+    {
+      "bytes": 3442,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/prepare_ui.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "fb1f80b31abaa2cb228cefa7f43eb7fb5ce932a6afaa3471a4977cdba4a7204f"
+    },
+    {
+      "bytes": 2071,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/prepare_v4.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "d2fbbd7adde9687222d5bf4254f18f9f4a42ab78e1a45291f20e0abafd805fd6"
+    },
+    {
+      "bytes": 1756,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/prepare_workspace.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "f0f4ceaaec0f396a5b4ed26617de05d1e5a3f2b057597f1d1d16fd7369c4a951"
+    },
+    {
+      "bytes": 2915,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/publish_human_topology.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "7462c92d446f21318cd3d472037f3c85031a7cd12c1b155604b756afe8443e43"
+    },
+    {
+      "bytes": 2703,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/publish_observer.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "f5a0988a28cf3cb8fdece72bf10cbf23d40f9d8245cae644be44f46bf7d8dc74"
+    },
+    {
+      "bytes": 1836,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/setup_collection.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "5c8bba37525d77b705b3fefb07a9ffbd7335fef340cd52c686b2ef9f8ad2f49e"
+    },
+    {
+      "bytes": 1958,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "management/workflow-start.md",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "fb313e7244ced78e22d9ba9216be8aed73926777adcbb1b03a8e8f7c47771f8e"
+    },
+    {
+      "bytes": 7461,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "management/workflow.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "492460c975ef0722de93f55895b17445cb9c01ee521d44ca814f6197e5d9abb7"
+    },
+    {
+      "bytes": 859,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/Dockerfile.endpoint",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "b20ee24d17a28d538160344a2613d4f63b23b624601cb4cdd330a559ce0f4a11"
+    },
+    {
+      "bytes": 1139,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/Dockerfile.management",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "c73c75a00ad54f47198410980ca3efd58301e0b2d01e66896baf09526d54adb7"
+    },
+    {
+      "bytes": 969,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/agent-inputs/AGENTS.md",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "1ff33d222fff1d26a311a68f302a83f3d8c557145de7141113bef72344e7c0fc"
+    },
+    {
+      "bytes": 612,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "network/agent-inputs/README.md",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "f340e8cca5e5771b3ad4d12a7cf7f4774d49cd38235075eba1c8581bc238a349"
+    },
+    {
+      "bytes": 1583,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/agent-inputs/change-format.md",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "079ca23b8ef4852aabc081243cac59b3846554a3c7b5aa00adc32d07ede153a5"
+    },
+    {
+      "bytes": 2564,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/agent-inputs/inventory.md",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "e7d841d19e7bb9adc2578b93319368694b4b753ef24bbdd8ac91e799b5ce83ff"
+    },
+    {
+      "bytes": 156,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/agent-inputs/opencode.json",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "b2ff3ddf1401c9ebdfa814b003ffd4fb63fcb6d10d2b23543070e401f8706fcb"
+    },
+    {
+      "bytes": 316,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/agent-inputs/task.txt",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "a685a1dbeb6937a240cfa8b8433c2e6f6785cb5774cdd9a73494da6c83914202"
+    },
+    {
+      "bytes": 2170,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "network/endpoint.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "a6e003dc7e735982106cb9028ed234318de9f2f77de91954337f1a5ada72188e"
+    },
+    {
+      "bytes": 3174,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "network/install-tools.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "c357bfb11e4de40e2d7f3cb91e2bab9c385d12f405caa2c65a348ee071c69101"
+    },
+    {
+      "bytes": 1243,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "network/net-observe.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "64261b32aa5cc7b53335724a9febf6437e2183cf4e6ae494d8bac33f2657f2f1"
+    },
+    {
+      "bytes": 281,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/python-requirements.txt",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "66286b765bfe7d0813b7469ad48e6df7f1edc7ba3ee587b83367731ff7a9786d"
+    },
+    {
+      "bytes": 1648,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/topology.clab.yml",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "2007eab61ab351170cc4f8aab60c0b16fafe862ae49851d185fe7d8854428ed8"
+    },
+    {
+      "bytes": 1691,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/ui/r1.cli",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "9eba9eb4a409ff0dadbca7b77774f80ac3b9c975d7801e3df75c2ae8d38f756d"
+    },
+    {
+      "bytes": 968,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/ui/r2.cli",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "3ecfd286b2dbabcd0d087d07a25661ba7b0618f9a247ef194ace7de19026f570"
+    },
+    {
+      "bytes": 1216,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/ui/r3.cli",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "0555f0277f5ed5660fe49a7a02484250a1af6ac8cd968d91c3971b70fac4405e"
+    },
+    {
+      "bytes": 2089,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "network/versions.json",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "574efae4e3a5c9300ddc76a220ddd1904899ab4d10ccf1e46f718269e9a2fff1"
+    },
+    {
+      "bytes": 1688,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "network/workload.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "2d9818eb7b2873016c8ff3c5029b869e36138141e3e26aff72d28d4e4cb3150f"
+    },
+    {
+      "bytes": 2624,
+      "mode": 420,
+      "ownership": "student-owned",
+      "path": "scripts/common.ps1",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "b6caa141610fbfd28c8ccaca0df39ac7477015e8d28a14ff229c5534cc44b3f1"
+    },
+    {
+      "bytes": 914,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "scripts/create.ps1",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "a9b579be53941f164a16b4b4965b3548c96c06cf918f4d6b7a069427d79eb2e8"
+    },
+    {
+      "bytes": 773,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "scripts/create.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "7eb50480d3ee04e9f3aae513a13cdece46b3040c99c9034e65e57983e668df1f"
+    },
+    {
+      "bytes": 5238,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "scripts/lab-common.ps1",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "c7af171a81c7e6ff45bc694e236c9fd4e99b929d392d421637d05497f25e0260"
+    },
+    {
+      "bytes": 1530,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "scripts/lab-ssh-config.awk",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "d7e99782d2747636a5adbd2b26aa20291e492b93dbadbad10d836f4404919751"
+    },
+    {
+      "bytes": 14658,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "scripts/lab.ps1",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "8c93cca63094d18be52d279f832a833e3a08c5a83608fae5123e720704207373"
+    },
+    {
+      "bytes": 12906,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "scripts/lab.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "38855a656daac6aa398df0cafdb5bd1ff1a0b631700d1b79ec41ed1914ad70e6"
+    },
+    {
+      "bytes": 1341,
+      "mode": 493,
+      "ownership": "student-owned",
+      "path": "scripts/sync-v4.sh",
+      "reason": "Student documentation or bounded source-transfer wrapper",
+      "sha256": "eae29a61a5701509d225333230d4bd443c68ff1bfaab423c28a071e66e9b135a"
+    },
+    {
+      "bytes": 469,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "scripts/update.ps1",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "00d44d784bce9b4e89b959209186641bf029b0270132225fc7114b3082f89fa9"
+    },
+    {
+      "bytes": 324,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "scripts/update.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "e44b202c9d4fb6cb50cd6390c4cb4ce9828d9ff030040d7fc6da80c0d0bbf3ec"
+    },
+    {
+      "bytes": 604,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "vm/cloud-init.yaml",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "099e7bea070bea3be6d88632e32c5a5b9ec2d78f96bb2270f85490fb80360b7b"
+    },
+    {
+      "bytes": 4520,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "vm/configure-accounts.py",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "e9a0706247079162c6875193feb19be070fa2ab245f62d9cf584fbf6a69c06a8"
+    },
+    {
+      "bytes": 623,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "vm/install-v4-tools.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "a2114000bb9ecbfaa02d6dc3b359d2d4b1375cfc458cedcdd06abda7f6aaf386"
+    },
+    {
+      "bytes": 1335,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "vm/provision-v4.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "73c53d7bd4f4a698a2715ad64f8794f860a0878fe171f05d8c79a71267a2fe5e"
+    },
+    {
+      "bytes": 89,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "vm/provision.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "c89509d325659ff1d5f0cedfbd10378a108ff80ffd98443d860ce4db2ec8d4c8"
+    },
+    {
+      "bytes": 322,
+      "mode": 420,
+      "ownership": "shared-runtime",
+      "path": "vm/seminar-lab-v4.service",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "332b34f71c66a92008d7ce11af766b9363c4787052eac545b77f3717c7c8ba19"
+    },
+    {
+      "bytes": 1926,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "vm/start-v4.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "c16b68128f1b7d709ffc63d75832a3ad87d7c1e38366f5e314684ba798bc88fc"
+    },
+    {
+      "bytes": 475,
+      "mode": 493,
+      "ownership": "shared-runtime",
+      "path": "vm/unpack-source.sh",
+      "reason": "Original local VM workflow dependency",
+      "sha256": "042182a056a0ba6d0fe65e80ba3f5f466cdb1468c9fb6f45722fb7815bcfeed3"
+    }
+  ],
+  "schema": 1,
+  "source_digest": "91a449a0f6c48a84a485443c0c070f737e9d95e0418d6946f8741db36f40b0f4",
+  "source_state": "selected working-tree bytes; per-file hashes authoritative",
+  "support": "Export/dependency/recorded transfer checks only; not fresh-VM or desktop qualified",
+  "upstream_base_commit": "684293fa796175454182fd983715c088e2259842"
+}

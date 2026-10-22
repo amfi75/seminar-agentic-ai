@@ -1,0 +1,14 @@
+[Unit]
+Description=Build the reference Containerlab network and restore its baseline
+Requires=docker.service
+After=docker.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/seminar-start
+TimeoutStartSec=900
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

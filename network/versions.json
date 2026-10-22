@@ -1,0 +1,49 @@
+{
+  "containerlab": {
+    "version": "0.81.1",
+    "arm64_deb_sha256": "404daab58fb1f97efb27e06c6390835f98ece35609d23aa0b69fcdc17f8fd7be",
+    "artifacts": {
+      "arm64": {
+        "url": "https://github.com/srl-labs/containerlab/releases/download/v0.81.1/containerlab_0.81.1_linux_arm64.deb",
+        "sha256": "404daab58fb1f97efb27e06c6390835f98ece35609d23aa0b69fcdc17f8fd7be"
+      },
+      "amd64": {
+        "url": "https://github.com/srl-labs/containerlab/releases/download/v0.81.1/containerlab_0.81.1_linux_amd64.deb",
+        "sha256": "f2f82d127c03e2170b9d721e455a9dc03d3633f298cce3076f9f81bf7e962ab2"
+      }
+    }
+  },
+  "gnmic": {
+    "version": "0.49.0",
+    "arm64_deb_sha256": "46c11b30fd079d37e7ebe6c6e8b7e89db53f30f07394cf6cb33ef793e5021e00",
+    "artifacts": {
+      "arm64": {
+        "url": "https://github.com/openconfig/gnmic/releases/download/v0.49.0/gnmic_0.49.0_Linux_aarch64.deb",
+        "sha256": "46c11b30fd079d37e7ebe6c6e8b7e89db53f30f07394cf6cb33ef793e5021e00"
+      },
+      "amd64": {
+        "url": "https://github.com/openconfig/gnmic/releases/download/v0.49.0/gnmic_0.49.0_Linux_x86_64.deb",
+        "sha256": "d36c56fc09cc4434441de5515aa816728064e4b8dfaea71f9d3a7fab405fd892"
+      }
+    }
+  },
+  "srlinux": {
+    "tag": "26.7.2-519",
+    "image": "ghcr.io/nokia/srlinux@sha256:0096fe3ebcafabb7253492e2060425fe027a168e0e066766d1e85efbb0b48be8",
+    "manifest_digest": "sha256:0096fe3ebcafabb7253492e2060425fe027a168e0e066766d1e85efbb0b48be8"
+  },
+  "opencode": {
+    "version": "1.19.3",
+    "arm64_tar_sha256": "7900818a6a98881edbbadab4b7525940eff3b9750040c200481f9f56cacee405",
+    "artifacts": {
+      "arm64": {
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.3/opencode-linux-arm64.tar.gz",
+        "sha256": "7900818a6a98881edbbadab4b7525940eff3b9750040c200481f9f56cacee405"
+      },
+      "amd64": {
+        "url": "https://github.com/anomalyco/opencode/releases/download/v1.19.3/opencode-linux-x64.tar.gz",
+        "sha256": "13a8fb2978302071b86f9d7e00da9c8895f9cd846978379c3bdc6a5333536c9b"
+      }
+    }
+  }
+}

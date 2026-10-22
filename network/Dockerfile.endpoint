@@ -1,0 +1,8 @@
+FROM ubuntu@sha256:68ee22004a9109b44973313b02ff7b1de250f1de0f5ecb628d73f579aaff33ac
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends openssh-server sudo iproute2 iputils-ping curl tcpdump python3 iperf3 ca-certificates && rm -rf /var/lib/apt/lists/* && useradd -m -s /bin/bash netops && passwd -d netops && install -d /run/sshd && rm -f /etc/ssh/ssh_host_*
+COPY network/endpoint.py /usr/local/sbin/endpoint
+COPY network/net-observe.py /usr/local/sbin/net-observe
+COPY network/workload.py /usr/local/sbin/workload
+RUN chmod 755 /usr/local/sbin/endpoint /usr/local/sbin/net-observe && printf 'netops ALL=(root) NOPASSWD: /usr/local/sbin/net-observe firewall, /usr/local/sbin/net-observe capture *\n' > /etc/sudoers.d/netops && chmod 440 /etc/sudoers.d/netops
+ENTRYPOINT ["python3", "/usr/local/sbin/endpoint"]

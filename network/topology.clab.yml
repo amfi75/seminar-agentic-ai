@@ -1,0 +1,61 @@
+name: seminar
+mgmt:
+  network: seminar-management
+  ipv4-subnet: 10.79.0.0/24
+topology:
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux@sha256:0096fe3ebcafabb7253492e2060425fe027a168e0e066766d1e85efbb0b48be8
+      type: ixr-d2l
+  nodes:
+    management:
+      kind: linux
+      image: seminar-management:v5
+      mgmt-ipv4: 10.79.0.20
+      privileged: false
+      user: agent
+      restart-policy: "no"
+      security-opts:
+        - no-new-privileges:true
+      sysctls:
+        net.ipv4.ping_group_range: "0 2147483647"
+      volumes:
+        - seminar-management-home:/home/agent
+      binds:
+        - /var/log/seminar-lab:/home/agent/observations:ro
+      labels:
+        graph-icon: controller
+    client:
+      kind: linux
+      image: seminar-endpoint:v4
+      mgmt-ipv4: 10.79.0.11
+      binds:
+        - /var/lib/seminar-lab/ssh/client:/run/lab-keys:ro
+      env:
+        MGMT_IP: 10.79.0.11
+        WORKLOAD: "true"
+      exec:
+        - ip address add 10.78.1.10/24 dev eth1
+        - ip route add 10.78.2.0/24 via 10.78.1.254
+    r1:
+      kind: nokia_srlinux
+      mgmt-ipv4: 10.79.0.12
+    r2:
+      kind: nokia_srlinux
+      mgmt-ipv4: 10.79.0.13
+    server:
+      kind: linux
+      image: seminar-endpoint:v4
+      mgmt-ipv4: 10.79.0.14
+      binds:
+        - /var/lib/seminar-lab/ssh/server:/run/lab-keys:ro
+      env:
+        MGMT_IP: 10.79.0.14
+        SERVICE_IP: 10.78.2.10
+      exec:
+        - ip address add 10.78.2.10/24 dev eth1
+        - ip route add 10.78.1.0/24 via 10.78.2.254
+  links:
+    - endpoints: [client:eth1, r1:e1-1]
+    - endpoints: [r1:e1-2, r2:e1-1]
+    - endpoints: [r2:e1-2, server:eth1]
