@@ -3,11 +3,14 @@
 import pathlib,json,secrets,subprocess,os,contextlib,io,logging
 logging.disable(logging.CRITICAL)
 from pygnmi.client import gNMIclient
+from network_access import role_updates
 STATE=pathlib.Path('/var/lib/seminar-lab');STATE.mkdir(mode=0o700,exist_ok=True)
 secrets_file=STATE/'device-credentials.json'
 if secrets_file.exists(): creds=json.loads(secrets_file.read_text())
 else:
  creds={k:secrets.token_hex(24) for k in ['operator','observer','disabled','snmp']};secrets_file.write_text(json.dumps(creds));secrets_file.chmod(0o600)
+if 'netops' not in creds:
+ creds['netops']=secrets.token_hex(24);secrets_file.write_text(json.dumps(creds));secrets_file.chmod(0o600)
 lab=pathlib.Path('/home/ubuntu/clab-seminar')
 # For the first pilot only; final provisioner passes the actual lab directory.
 if os.environ.get('LAB_DIRECTORY'):lab=pathlib.Path(os.environ['LAB_DIRECTORY'])
@@ -23,6 +26,7 @@ for node in ['r1','r2']:
  updates += [entry('/system/aaa/authorization/role[rolename=observer]',{'rolename':'observer','services':['cli','gnmi','netconf','json-rpc'],'superuser':False,'cli':{'load-global-plugins':False,'load-user-plugins':False,'allow-command-list':['^info(?: [A-Za-z0-9_*/. =:-]+)?$','^quit$','^exit$']},'netconf':{'allowed-operations':['get','get-config','get-data','get-schema','close-session']}})]
  updates += [entry('/system/configuration/role[name=observer]',{'name':'observer','rule':[{'path-reference':'/','action':'deny'},{'path-reference':'interface ethernet-1/1','action':'read'},{'path-reference':'interface ethernet-1/2','action':'read'},{'path-reference':'network-instance default','action':'read'},{'path-reference':'system name','action':'read'},{'path-reference':'system information','action':'read'},{'path-reference':'acl','action':'read'}]})]
  updates += [entry('/system/aaa/authentication/user[username=observer]',{'username':'observer','password':creds['observer'],'role':['observer'],'superuser':False,'ssh-key':[(STATE/'ssh/agent_ed25519.pub').read_text().strip()]}),entry('/system/aaa/authentication/user[username=operator]',{'username':'operator','password':creds['operator'],'superuser':True})]
+ updates += role_updates((STATE/'ssh/agent_ed25519.pub').read_text().strip(),creds['netops'])
  # Replace vendor/default credentials. Native admin remains operator-private.
  updates += [entry('/system/aaa/authentication/admin-user/password',creds['disabled']),entry('/system/aaa/authentication/linuxadmin-user/password',creds['disabled'])]
  # Two data interfaces and their routing network instance.

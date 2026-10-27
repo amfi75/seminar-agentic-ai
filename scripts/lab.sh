@@ -95,7 +95,7 @@ installer=/opt/seminar-lab/management/install_workflow.py
 if [[ "$action" == setup ]]; then
  guest_stage=$(mp exec "$vm" -- mktemp -d /home/ubuntu/lab-workflow.XXXXXX)
  [[ "$guest_stage" =~ ^/home/ubuntu/lab-workflow\.[A-Za-z0-9]+$ ]] || fail 'Unexpected guest staging path.'
- for file in install_workflow.py workflow.py fresh_trial_entry.py workflow-start.md; do
+ for file in install_workflow.py workflow.py fresh_trial_entry.py recover_entry.py workflow-start.md; do
   mp transfer "$root/management/$file" "$vm:$guest_stage/$file"
  done
  installer="$guest_stage/install_workflow.py"

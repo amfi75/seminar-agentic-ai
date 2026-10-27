@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Human terminal tasks. Native authorization stays in lab-admin."""
+"""Student infrastructure tasks, separate from ordinary device administration."""
 import fcntl
 import json
 import os
@@ -28,8 +28,6 @@ def run(args):
 def admin(*args):
     raw = run(['sudo', '-n', ADMIN, *args])
     result = json.loads(raw)
-    if result.get('requires_recovery') or ('applied' in result and args[0] == 'approve' and not result['applied']):
-        raise RuntimeError('Application failed; inspect the result and recover deliberately. No automatic reset was performed.')
     return result
 
 
@@ -65,7 +63,7 @@ def start_agent():
         identity = subprocess.check_output(['docker', 'exec', '--user', 'agent', CONTAINER, 'id', '-u'], text=True).strip()
         if identity != '1100':
             raise RuntimeError('Unexpected management identity; refusing to start the harness.')
-        print('OpenCode runs as agent in management, from /home/agent.\nRead workspace/inventory.md and workspace/task.txt.\nUse /models to select an authorized model; no model is selected automatically.', flush=True)
+        print('OpenCode runs as agent in management, from /home/agent.\nRead workspace/inventory.md and give the agent your own task.\nUse /models to select an authorized model; no model is selected automatically.', flush=True)
         return subprocess.call(['docker', 'exec', '-it', '--user', 'agent', '-w', '/home/agent', CONTAINER, 'flock', '-n', '/tmp/seminar-opencode.lock', 'opencode'])
 
 
@@ -84,34 +82,14 @@ def dispatch(action):
         operation, label = SCENARIOS[choice]
         confirm('Human action: ' + label + '. This changes the reference network.')
         admin(operation)
-    elif action == 'review':
-        target = ask('Target router (r1 or r2)')
-        protocol = ask('Native protocol (gnmi or netconf)')
-        filename = ask('File relative to /home/agent/workspace')
-        reason = ask('Your reason after reviewing the observations')
-        if target not in ('r1', 'r2') or protocol not in ('gnmi', 'netconf'):
-            raise ValueError('Choose r1/r2 and gnmi/netconf. No import performed.')
-        parts = filename.split('/')
-        if any(p in ('', '.', '..') for p in parts) or '\x00' in filename or len(filename) > 900:
-            raise ValueError('Use a regular file within the management workspace.')
-        if len(reason) > 2000:
-            raise ValueError('Reason must be at most 2000 characters.')
-        result = admin('import', target, protocol, '/home/agent/workspace/' + filename, reason)
-        identity = result['candidate']
-        admin('show', identity)
-        print('\nImported and reviewed ONLY. No change applied.\nCandidate: ' + identity + '\nUse the separate Approve reviewed change task if you decide to approve it.')
-    elif action == 'approve':
-        identity = ask('Exact full candidate ID from your review')
-        if not re.fullmatch('[0-9a-f]{64}', identity):
-            raise ValueError('A full 64-character candidate ID is required. No approval performed.')
-        admin('show', identity)
-        confirm('Approve exactly this candidate? ' + identity, identity)
-        admin('approve', identity)
-        print('\nApplication/readback completed. Checking correctness independently:')
-        admin('verify')
     elif action == 'reset':
-        confirm('Reset restores device baseline, clears impairments, resumes workload, and invalidates candidates.\nIt PRESERVES OpenCode history; it does not make an independent fresh trial.')
+        confirm('Reset restores device baseline, clears impairments, resumes workload, and restores native configuration.\nIt PRESERVES OpenCode history; it does not make an independent fresh trial.')
         admin('reset')
+    elif action == 'recover':
+        if active():
+            raise RuntimeError('Stop OpenCode before rebuilding devices; profile unchanged.')
+        confirm('Rebuild the network devices and restore credentials. Management home/history are preserved. This interrupts the experiment.', 'recover')
+        run(['sudo', '-n', '/usr/local/sbin/lab-recover'])
     elif action == 'fresh':
         if active():
             raise RuntimeError('Stop OpenCode before making a fresh trial. Your profile is unchanged.')
@@ -129,7 +107,7 @@ def dispatch(action):
         if operation == 'pause':
             print('Wait 20 seconds before isolated measurements. Record that workload was paused, then resume it.')
     else:
-        raise ValueError('Use agent, check, scenario, review, approve, reset, fresh, or traffic.')
+        raise ValueError('Use agent, check, scenario, reset, recover, fresh, or traffic.')
     return 0
 
 

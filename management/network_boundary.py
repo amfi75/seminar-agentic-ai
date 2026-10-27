@@ -39,3 +39,36 @@ for node in nodes:
   check=subprocess.run(['nsenter','-t',str(pid),'-n','ip6tables' if ipv6 else 'iptables','-w','-C','OUTPUT','-j',chain],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
   if check.returncode:rule(pid,ipv6,'-I','OUTPUT','1','-j',chain)
 print('Management and SSH-accessible endpoints restricted to authorized network paths')
+
+# The VM owns these rules. Router configuration/endpoint namespaces cannot remove
+# them. Match the incoming bridge (not a spoofable source address).
+network=json.loads(subprocess.check_output(['docker','network','inspect','seminar-management']))[0]
+bridge=network.get('Options',{}).get('com.docker.network.bridge.name') or 'br-'+network['Id'][:12]
+
+def host_rule(*args, check=True):
+ return subprocess.run(['iptables','-w',*args],check=check,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+
+for chain,parent in [('SEMINAR_HOST_INPUT','INPUT'),('SEMINAR_HOST_FORWARD','DOCKER-USER')]:
+ host_rule('-N',chain,check=False);host_rule('-F',chain)
+ host_rule('-A',chain,'-m','conntrack','--ctstate','ESTABLISHED,RELATED','-j','ACCEPT')
+ if parent=='INPUT':
+  for source in ('10.79.0.12','10.79.0.13'):
+   host_rule('-A',chain,'-s',source,'-d','10.79.0.1','-p','udp','--dport','5514','-j','ACCEPT')
+ else:
+  host_rule('-A',chain,'-d','10.79.0.0/24','-j','ACCEPT')
+  # Only management requires provider HTTPS and external DNS. No LAN service access.
+  for resolver in resolvers:
+   for protocol in ('udp','tcp'):
+    host_rule('-A',chain,'-s','10.79.0.20','-d',resolver,'-p',protocol,'--dport','53','-j','ACCEPT')
+  for scope in ('10.0.0.0/8','172.16.0.0/12','192.168.0.0/16','169.254.0.0/16','100.64.0.0/10','224.0.0.0/3'):
+   host_rule('-A',chain,'-d',scope,'-j','REJECT')
+  host_rule('-A',chain,'-s','10.79.0.20','-p','tcp','--dport','443','-j','ACCEPT')
+ host_rule('-A',chain,'-j','REJECT')
+ if host_rule('-C',parent,'-i',bridge,'-j',chain,check=False).returncode:
+  host_rule('-I',parent,'1','-i',bridge,'-j',chain)
+# No IPv6 service is provided on this management bridge. Docker EnableIPv6 is
+# not a kernel isolation guarantee: reject link-local and forwarded IPv6 too.
+for parent in ('INPUT','FORWARD'):
+ check=subprocess.run(['ip6tables','-w','-C',parent,'-i',bridge,'-j','REJECT'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+ if check.returncode:subprocess.run(['ip6tables','-w','-I',parent,'1','-i',bridge,'-j','REJECT'],check=True)
+print('VM-owned bridge boundary protects VM controls and private external networks')

@@ -35,7 +35,12 @@ function Sync-LabSource {
                 if ($cursor -is [IO.FileInfo]) { $cursor = $cursor.Directory } else { $cursor = $cursor.Parent }
             }
         }
-        Invoke-LabNative 'tar' @('-czf', $archive, '-T', $list)
+        $oldCopyfile = $env:COPYFILE_DISABLE
+        try {
+            $env:COPYFILE_DISABLE = '1'
+            Invoke-LabNative 'tar' @('-czf', $archive, '-T', $list)
+        }
+        finally { $env:COPYFILE_DISABLE = $oldCopyfile }
         Invoke-LabNative 'multipass' @('transfer', $archive, "${VmName}:/home/ubuntu/v4-source.tar.gz")
         # Transfer the shared guest program instead of transporting a shell string
         # through Windows native argument quoting.

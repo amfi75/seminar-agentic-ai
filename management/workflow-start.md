@@ -1,18 +1,29 @@
-# Your network lab
+# Your network environment
 
-Open **Terminal → Run Task…** (or **Tasks: Run Task** in the Command Palette), then choose a **Lab:** task.
+Open **Tasks: Run Task**, then choose a **Lab:** task.
 
-1. **Check network** to see the baseline. An intentional scenario can make this check fail.
-2. **Choose scenario** when you want to start an experiment.
-3. **Start OpenCode** to open the agent's interactive terminal. Read `workspace/inventory.md` and give it `workspace/task.txt`; choose an authorized model with `/models`.
-4. **Review proposed change** to import a native file and inspect the exact candidate. This applies nothing.
-5. **Approve reviewed change** only after your own review. Paste the full candidate ID, review it again, then type that ID to confirm. Application and independent verification are separate results.
-6. **Reset network** to restore baseline. History stays intact. **Start fresh trial** instead archives and replaces the agent home; stop OpenCode first.
+- **Start OpenCode** opens stock OpenCode on the management workstation. Give it
+  your own task and choose your authorized model/provider. It can investigate and
+  configure routers directly through native tools; there is no review/approval
+  gateway. Decide for yourself how you supervise it.
+- **Choose scenario**, **Check network** and **Advanced: workload controls** are
+  student experiment controls outside the agent environment.
+- **Reset network** restores the baseline through device management and preserves
+  the agent home/history. If a device is inaccessible or its credentials changed,
+  use **Recover devices (preserve agent history)** after stopping OpenCode.
+  Recovery rebuilds devices out of band and restores access, preserving the home.
+- **Start fresh trial** instead archives and replaces the management home. Stop
+  OpenCode first. This is separate from reset/recovery.
 
-For the running graph, open **Containerlab → Running Labs → seminar (root) → Graph → Graph (TopoViewer)**. The reference file is `/var/lib/seminar-lab/runtime/topology.clab.yml`. The separate `ui` folder is an editing copy; viewing the reference does not require deployment.
+The agent sees a management machine and operational inventory. Keep your scenario
+controls, implementation source, historical experiments and this workspace outside
+its context. It gets network-administration privileges, not container/VM control,
+Linux host access on routers or permission to change its own device role.
 
-**Advanced: workload controls** pauses/resumes traffic deliberately. Wait 20 seconds after pause before isolated measurements and declare that condition.
+For the running graph, use **Containerlab → Running Labs → seminar → Graph →
+Graph (TopoViewer)**. The separate UI folder is an editing example.
 
-You are `student` in the VM. OpenCode is `agent` inside management. Keep this operator workspace, fault controls, and historical solutions outside the model's context. Native proposed files belong under `/home/agent/workspace`; the harness starts from `/home/agent` so its ordinary observer files remain in scope.
-
-Save edits before leaving. On your host run `bash scripts/lab.sh pause` (Windows: the same `pause` action in `scripts/lab.ps1`). Resume later with `open`. Cold start after shutdown restores the baseline through the existing boot service; suspend/resume preserves current runtime state.
+On the host use `bash scripts/lab.sh pause` or `stop`; resume with `open`.
+Ordinary open resumes devices without a harness baseline reset. A router reboot
+uses that router's saved startup configuration, just as a normal device does;
+save device configuration when you want it to survive a reboot.

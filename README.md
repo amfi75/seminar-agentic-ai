@@ -1,41 +1,43 @@
-# Agentic AI network lab — student edition
+# Agentic AI network environment — student edition
 
-A self-contained local lab for exploring how an AI agent investigates network
-problems. One Ubuntu VM contains a management workstation running stock OpenCode,
-a client/server workload, and two Nokia SR Linux routers.
+A local environment for working with stock AI agents and real network-management
+interfaces. One Ubuntu VM contains a management workstation, a client/server
+workload and two Nokia SR Linux routers. You choose the task, agent instructions,
+provider and level of supervision.
 
 ```text
-Client ── R1 ── R2 ── Server
-          management workstation: OpenCode + native diagnostics
+client ── R1 ── R2 ── server       application traffic
+           │     │
+       management workstation    native SSH / gNMI / NETCONF
+
+student controls → scenarios, measurements, reset and recovery
 ```
 
-You are the human operator. The agent has observer access and may propose native
-configuration files; you separately review and approve exact changes. Built-in
-routing and performance scenarios are included as ordinary local lab source.
-You own the VM and can inspect that source. This is not an examination sandbox.
+The agent can configure the network directly. There is no mandatory proposal
+format or broker approval. It has network-administration access, without device
+Linux/root, account-role administration, container or VM controls. Infrastructure
+and experiment controls are for you, outside the agent's environment. There is
+no lecture component or observer model.
 
 ## Setup
 
-Install Multipass and VS Code with Remote - SSH, and provide Internet access.
-The lab requests 4 virtual CPUs, 8 GiB RAM and 40 GiB disk. Docker, Containerlab,
-OpenCode and native clients are installed inside the VM. A local LLM is not
-required. Configure your own authorized model access in OpenCode; no shared key,
-secret service or external private repository is required.
-
-From the cloned repository directory:
+Install [Multipass](https://canonical.com/multipass/install),
+[VS Code](https://code.visualstudio.com/download) and **Remote - SSH**. Allow
+4 CPUs, 8 GiB RAM and 40 GiB disk for the VM. From this repository:
 
 ```sh
 bash scripts/lab.sh setup
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\lab.ps1 setup
 ```
 
-Follow [installation and daily use](docs/start-here.md). Administrator, SSH-key
-passphrase and VS Code trust prompts are completed locally by you.
+Tools and the pinned stock OpenCode binary are installed inside the VM. Configure
+your own model/provider access through OpenCode. No shared key or private service
+is required. Follow the [installation and daily guide](docs/start-here.md).
 
 ## Daily use
 
@@ -46,27 +48,29 @@ bash scripts/lab.sh pause
 bash scripts/lab.sh stop
 ```
 
-On Windows, use the same actions with `scripts/lab.ps1`. Open resumes the lab;
-it does not reset an experiment. In remote VS Code, use **Tasks: Run Task → Lab:**
-for OpenCode, network checks, scenarios, review/approval, reset and fresh trials.
+Use **Tasks: Run Task → Lab: Start OpenCode** in remote VS Code. The agent starts
+in `/home/agent`; `workspace/inventory.md` describes devices and native access.
+Supply your own task. The shell and agent tools are ordinary off-the-shelf tools.
+You operate scenarios and recovery from the separate student workspace.
 
-There is no lecture controller, stepper, observer model or live teaching pane.
-Ordinary OpenCode runs from `/home/agent` in management. Read the generated
-`workspace/inventory.md` and `workspace/task.txt`; select an authorized model with
-`/models`. Keep proposed native files in `workspace/` and submit them through the
-human **Review proposed change** task, then the separate **Approve reviewed
-change** task. A successful device write is not proof that the application works.
+An agent can break routing, access rules or its own management connection.
+**Reset network** restores baseline using device management; **Recover devices**
+rebuilds devices out of band while preserving agent history. **Start fresh trial**
+archives and replaces the agent home. Stop OpenCode before recovery/fresh trial.
+Open resumes devices without a harness reset; router reboots use saved startup
+configuration, so save device configuration when persistence is intended.
 
-## Support and provenance
+See [architecture](docs/architecture.md), [troubleshooting](docs/troubleshooting.md)
+and [source maintenance](docs/source-maintenance.md). Credentials and trust are
+generated privately per VM and never supplied in Git. Students own the VM and can
+inspect its implementation; the agent is deliberately given only an operational
+view, with no promise that virtualization cannot be inferred.
 
-The original runtime has historical Apple-Silicon/ARM64 lab evidence. This
-separated source distribution has export, dependency, archive and recorded
-transfer checks; it has **not been freshly installed in a VM or desktop-qualified**.
-Windows, Intel Mac and Linux paths are supplied without new platform qualification.
-Do not interpret source checks as a successful end-to-end install on your machine.
+## Validation scope
 
-`STUDENT-SOURCE-MANIFEST.json` records exact exported file hashes and a source
-digest. `STUDENT-FILES.txt` lists the intended distribution files. Start with
-[the guide](docs/start-here.md), [troubleshooting](docs/troubleshooting.md),
-[architecture](docs/architecture.md) and [source maintenance](docs/source-maintenance.md).
-Runtime credentials are generated privately on your own VM, never supplied in Git.
+The direct-device revision was checked in an isolated Ubuntu ARM64 VM: direct
+CLI/gNMI/NETCONF writes, permission boundaries, cold restart, recovery and profile
+preservation. No paid model calls were made.
+This is not Windows, Intel Mac or Linux-desktop qualification, a model-performance
+benchmark, or a teaching-mode qualification. Exact files and hashes are in
+`STUDENT-SOURCE-MANIFEST.json`; transfer uses `STUDENT-FILES.txt`.

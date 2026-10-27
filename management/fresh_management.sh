@@ -18,6 +18,8 @@ python3 /opt/seminar-lab/management/archive_home.py "$volume" "$archive"
 docker rm clab-seminar-management >/dev/null
 docker volume rm seminar-management-home >/dev/null
 rm -f "$state/management-home-identity.json"
+touch "$state/rebuild-request"
+chmod 0600 "$state/rebuild-request"
 flock -u 9
 systemctl restart seminar-lab
 echo 'Fresh management home ready; previous profile retained privately.'

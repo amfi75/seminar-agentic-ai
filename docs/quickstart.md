@@ -1,72 +1,101 @@
-# Install and use the local lab
+# Installation and daily use
 
-Install [Multipass](https://canonical.com/multipass/install) and
-[VS Code](https://code.visualstudio.com/download), with its **Remote - SSH**
-extension. Windows requires its OpenSSH client and supported virtualization;
-Linux requires a working supported Multipass installation. macOS users can use
-VS Code's **Shell Command: Install 'code' command in PATH**. The launcher also
-recognizes the usual macOS application installation.
+Install [Multipass](https://canonical.com/multipass/install),
+[VS Code](https://code.visualstudio.com/download) and its **Remote - SSH** extension.
+Windows needs OpenSSH and supported virtualization. Linux needs supported Multipass.
+On macOS, enable VS Code's `code` shell command or install it in Applications.
+Allow 4 virtual CPUs, 8 GiB RAM and 40 GiB disk plus resources for your host.
+Internet access is needed for the pinned tools and images; no local GPU is required.
 
-Clone or unpack the student source into a directory you own. Allow room for a
-4-CPU,8-GiB,40-GiB VM plus your host applications. Do not run several heavy lab VMs
-at once on a constrained laptop. A local language model or GPU is not required.
-
-## First setup
-
-In your host terminal, from the repository:
+Clone/unpack this source to a directory you own. In the host terminal:
 
 ```sh
 bash scripts/lab.sh setup
 ```
 
-On Windows PowerShell:
+Windows:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\lab.ps1 setup
 ```
 
-Setup creates or safely recognizes the named VM, installs its tools, configures
-a standard `seminar-lab` SSH connection and opens the human workspace. An existing
-VM or divergent edits are preserved; follow the reported diagnostic rather than
-deleting a VM to retry. Complete administrator/passphrase/trust prompts locally.
-A default vendor bootstrap password in provisioning is replaced with generated
-per-VM credentials; it is not a student model-provider credential.
+Complete administrator, SSH-key passphrase and VS Code trust dialogs yourself.
+Existing VMs and divergent files are preserved; diagnose reported collisions.
+Do not delete a VM to retry. Generated per-VM credentials replace device vendor
+bootstrap defaults. Configure your own authorized model/provider inside OpenCode.
 
-## Open and operate
+## Work with the environment
 
-Run `bash scripts/lab.sh open`, or `scripts/lab.ps1 open` on Windows. In remote
-VS Code, **Tasks: Run Task** provides:
+Use `bash scripts/lab.sh open` (Windows: `scripts/lab.ps1 open`). In remote VS Code,
+**Tasks: Run Task** exposes:
 
-- **Lab: Start OpenCode** — stock agent as a non-root management user. Configure
-  your own provider through its normal login/model selection. No model request
-  or paid provider is selected automatically by this repository.
-- **Lab: Check network** — explicit client-to-service and access-rule checks;
-  a deliberately broken scenario can fail while management still works.
-- **Lab: Choose scenario** — routing incident, delay/jitter, loss or rate limit.
-- **Lab: Review proposed change** — import an existing native gNMI/NETCONF file
-  from `/home/agent/workspace`, inspect the resulting exact candidate.
-- **Lab: Approve reviewed change** — separately confirm that full candidate ID;
-  then check observed application behavior, not only configuration readback.
-- **Lab: Reset network** — restore the baseline while preserving agent history.
-- **Lab: Start fresh trial** — explicitly archive and replace the management
-  profile; stop OpenCode first. This is different from an ordinary reset.
-- **Lab: Advanced: workload controls** — explicitly pause/resume background traffic.
+- **Start OpenCode:** stock agent on management, starting in `/home/agent`.
+  Read `workspace/inventory.md`, select your provider/model and supply your own task.
+  It can read and configure routers directly using native tools, without a broker
+  proposal or approval step. Choose your own instructions and supervision.
+- **Choose scenario:** introduce a routing incident or a performance impairment.
+- **Check network:** test actual application reachability and administrative access
+  restrictions. A deliberate scenario can make this fail while management works.
+- **Advanced: workload controls:** inspect, pause or resume background traffic.
+  If isolating a measurement, wait 20 seconds after pause and record that condition.
+- **Reset network:** restore baseline via device management, retaining agent history.
+- **Recover devices (preserve agent history):** rebuild devices out of band when
+  management or credentials are broken. Stop OpenCode first. The home is retained;
+  SSH/TLS trust and generated device credentials are refreshed.
+- **Start fresh trial:** stop OpenCode, privately archive/verify the management home,
+  then replace it. Provider configuration may need to be entered again.
 
-For topology, use **Containerlab → Running Labs → seminar → Graph → Graph
-(TopoViewer)**. The separate editable UI lab is not the running reference lab.
+The agent sees devices, credentials and services. Keep your operator workspace,
+scenario implementation and earlier experiment evidence out of its context.
+Router network administration excludes Linux/root and account-role administration;
+container/VM controls are not available to the agent. Normal client/server SSH is
+available for diagnostics. Independent measurements can be read in `~/observations`.
+See [architecture](architecture.md) for the full human-facing design.
 
-OpenCode starts in `/home/agent`, where ordinary observer trust/config files are
-in scope. Read generated `workspace/inventory.md` and `workspace/task.txt`.
-The human operator owns Docker/control access; the executing agent does not.
-The old `network/agent-inputs/` files are VM bootstrap inputs, not current
-management instructions. See its [bootstrap note](../network/agent-inputs/README.md).
+For the graph: **Containerlab → Running Labs → seminar → Graph → Graph
+(TopoViewer)**. The separate UI folder is an editable example, not the running lab.
 
-## Pause, stop and recovery
+## Native device commands
 
-`bash scripts/lab.sh pause` suspends the VM; `stop` shuts it down. `open` starts
-or resumes it without reset. Windows uses the corresponding `scripts/lab.ps1`
-actions. Save editor work before disconnecting. VM deletion/purge is not a normal
-shutdown operation. Consult [troubleshooting](troubleshooting.md).
+In a management terminal (the same account/environment used by OpenCode):
 
-This source split is not freshly VM-installed or desktop-qualified. See
-[the README support statement](../README.md#support-and-provenance).
+```sh
+ssh r1 'info from state interface ethernet-1/1 oper-state'
+gnmic -a 10.79.0.12:57400 get --path '/interface[name=ethernet-1/1]' --type config --encoding json_ietf
+```
+
+For a small direct-write exercise, first check that the interface has no existing
+description. If it does, record and restore that value instead of deleting it.
+The generated `GNMIC_CONFIG` supplies credentials and verified TLS automatically:
+
+```sh
+gnmic -a 10.79.0.12:57400 set --update-path '/interface[name=ethernet-1/1]/description' --update-value '"practice-note"' --encoding json_ietf
+gnmic -a 10.79.0.12:57400 get --path '/interface[name=ethernet-1/1]/description' --type config --encoding json_ietf
+gnmic -a 10.79.0.12:57400 set --delete '/interface[name=ethernet-1/1]/description'
+```
+
+These are direct native operations, with no broker or special agent tool. Use
+`ssh r1 'tools system configuration save'` when you want the resulting router
+configuration to survive reboot. Do not save a temporary exercise unintentionally.
+
+## Pause and stop
+
+`bash scripts/lab.sh pause` suspends; `stop` shuts down; `open` resumes without
+resetting the network. Windows uses the corresponding `scripts/lab.ps1` actions.
+A router reboot loads saved startup configuration: save device configuration when
+needed. Save editor work before disconnecting. Deletion/purge is not normal shutdown.
+
+## Updating an older observer-only installation
+
+Stop all agent sessions, then run `bash scripts/update.sh` for the selected VM
+(Windows: `scripts/update.ps1`). This explicit update rebuilds devices and refreshes
+native access while preserving the management home and model profile. Re-run setup
+to refresh student workspace tasks if needed. Generated unchanged inventory and
+legacy assignment are migrated; custom edits cause a collision report and are
+preserved. Archive/move a reported custom file yourself before retrying, or reconcile
+it with the current inventory. Do not remove your provider/model configuration.
+If an old custom instruction/config still prescribes observer-only/broker use,
+explicitly archive/remove that restriction before update; it is never silently
+rewritten. [Troubleshooting](troubleshooting.md) covers recovery and trust.
+
+Validation scope is described in the [README](../README.md#validation-scope).

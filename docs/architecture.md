@@ -1,23 +1,56 @@
-# Architecture and authority
+# Architecture and access
 
-A local Ubuntu VM runs Containerlab: client, two SR Linux routers, server and a
-management workstation. Client application traffic uses the separate data path;
-router management protocols use the management network. Existing HTTP/UDP
-workloads, SNMP/gNMI collectors and Syslog provide ordinary observations.
+The lab is the scaffold. The stock agent works through normal device interfaces;
+the student controls the scaffold separately.
 
-The host's human student operator owns the VM. Local scenario/reset/workload
-controls and exact native configuration approval are human actions. The
-executing OpenCode account is non-root in management, with observer credentials,
-no Docker socket, no human home and no operator credentials. SSH/TLS identities
-are verified. No instruction or tool result grants additional write authority.
+```mermaid
+flowchart TB
+  S[Student in VS Code] --> H[Scenario / measurement / reset / recovery controls]
+  S --> A[Stock OpenCode on management workstation]
+  A -->|SSH CLI / gNMI / NETCONF / JSON-RPC| R[SR Linux R1 and R2]
+  A -->|SSH diagnostics| E[Linux client and server]
+  C[Client] --> R1[R1] --> R2[R2] --> V[Server]
+  H -->|VM-side lifecycle and experiment operations| L[Containerlab environment]
+  R --> T[Independent SNMP / gNMI / Syslog collection]
+  T -->|read-only observations| A
+```
 
-There is no lecture component or model observer. Model/provider configuration is
-ordinary user-owned OpenCode configuration. The current generated inventory and
-task live in `/home/agent/workspace`; credential/trust files live privately in
-that account's `.lab`/`.ssh`. Historical bootstrap inputs in the source are not
-custom instructions installed into the current management home.
+One Ubuntu VM runs the reference network and a management workstation. Application
+traffic uses client—R1—R2—server. A separate management network provides device
+protocol access; successful management access does not prove application recovery.
+The student can inspect all implementation and scenario code in this VM.
 
-The human can inspect all local source and VM state, including built-in scenarios.
-This separation protects the agent's role; it does not hide scenario code from
-a VM administrator. Baseline/device credentials are generated per VM and local
-profiles/archives remain private runtime state, not repository content.
+The management workstation uses an ordinary non-root `agent` account and a pinned,
+unmodified OpenCode binary. It has standard native clients and a neutral device
+inventory, with no prescribed incident, solution sequence, approval gateway,
+custom model policy or lab tool/plugin. Students provide their own prompt and
+model access. They may use other ordinary clients/tools in this environment.
+
+A generated `netops` device identity permits general network configuration,
+including interfaces, routing and ACLs, through native APIs. Native device roles
+exclude account/authorization changes and router Linux/root/host-command access.
+The agent cannot grant itself stronger credentials. A separate private provisioning
+identity supports initialization and recovery. Independent collectors retain their
+read-only identity. SSH host keys and the TLS CA are verified.
+
+The workstation receives no Docker socket, Containerlab client, VM login, operator
+workspace or scenario/recovery API. VM-owned network filters also cover traffic
+originating at administrable routers, preventing access to VM control services and
+private external networks. Required device protocols and telemetry remain usable.
+This is a local student sandbox, not a guarantee against every device/container
+exploit. Native access can still break the experiment or disconnect the agent.
+
+Student controls are separate: scenarios, workload pause/resume, factual telemetry,
+application checks, baseline reset, out-of-band device recovery and fresh trials.
+The internal privileged helper implements only experiment operations; it does not
+proxy agent configuration writes or determine whether an agent's answer is correct.
+
+Reset preserves the home/history. Recovery rebuilds device containers and trust
+out of band while preserving that home. Fresh trial archives/verifies the home
+before replacing it. Normal open/start resumes existing devices; reboot persistence
+follows saved router startup configuration. There is no automatic reset on open.
+
+`~/.config/network/` holds generated native client configuration and credentials;
+`~/.ssh/` holds generated device SSH identity/trust. Both remain private runtime
+state. Collected observations are mounted read-only at `~/observations`.
+No host/provider/device keys or runtime profiles belong in this repository.

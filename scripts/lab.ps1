@@ -69,7 +69,7 @@ try {
     if ($Action -eq 'setup') {
         $guestStage = (Invoke-LabMultipass @('exec',$VmName,'--','mktemp','-d','/home/ubuntu/lab-workflow.XXXXXX')).Trim()
         if ($guestStage -notmatch '^/home/ubuntu/lab-workflow\.[A-Za-z0-9]+$') { throw 'Unexpected staging path.' }
-        foreach ($file in @('install_workflow.py','workflow.py','fresh_trial_entry.py','workflow-start.md')) {
+        foreach ($file in @('install_workflow.py','workflow.py','fresh_trial_entry.py', 'recover_entry.py','workflow-start.md')) {
             Write-Host (Invoke-LabMultipass @('transfer',(Join-Path $projectRoot "management/$file"),"${VmName}:$guestStage/$file"))
         }
         $installer = "$guestStage/install_workflow.py"

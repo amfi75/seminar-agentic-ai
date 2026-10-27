@@ -6,7 +6,7 @@ RUN python3 /tmp/lab-tools/install-tools.py gnmic opencode && rm -rf /tmp/lab-to
 COPY network/python-requirements.txt /tmp/requirements.txt
 RUN python3 -m venv /opt/clients && /opt/clients/bin/pip install --no-cache-dir -r /tmp/requirements.txt && rm /tmp/requirements.txt && groupadd -g 1004 lab-readers && useradd -m -u 1100 -s /bin/bash -G lab-readers agent && mkdir -p /home/agent/workspace && chown -R agent:agent /home/agent && find / -xdev -type f -perm /6000 -exec chmod a-s {} + && getcap -r / 2>/dev/null | cut -d' ' -f1 | xargs -r -n1 setcap -r
 ENV PATH=/opt/clients/bin:/usr/local/bin:/usr/bin:/bin
-ENV GNMIC_CONFIG=/home/agent/.lab/gnmic.yaml SNMPCONFPATH=/home/agent/.lab
+ENV GNMIC_CONFIG=/home/agent/.config/network/gnmic.yaml SNMPCONFPATH=/home/agent/.config/network
 WORKDIR /home/agent
 USER agent
 CMD ["sleep", "infinity"]

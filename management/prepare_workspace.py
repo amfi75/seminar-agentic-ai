@@ -18,15 +18,4 @@ if not marker.exists() or sys.argv[1:]==['--fresh-trial']:
  history=json.loads(marker.read_text()).get('archives',[]) if marker.exists() else []
  history.append(str(archive))
  marker.write_text(json.dumps({'prior_profile_preserved':True,'archives':history}));marker.chmod(0o600)
-workspace=home/'experiment'
-try:workspace.mkdir(mode=0o700);os.chown(workspace,u.pw_uid,u.pw_gid)
-except FileExistsError:pass
-fd=os.open(workspace,os.O_DIRECTORY|os.O_NOFOLLOW|os.O_RDONLY)
-try:
- assert os.fstat(fd).st_uid==u.pw_uid
- with tempfile.TemporaryDirectory(dir=state) as t:
-  for src in pathlib.Path('/opt/seminar-lab/network/agent-inputs').iterdir():
-   staged=pathlib.Path(t)/src.name;shutil.copyfile(src,staged);staged.chmod(0o444)
-   os.replace(staged,src.name,dst_dir_fd=fd)
-finally:os.close(fd)
-print('Neutral inputs installed; prior profile preserved privately')
+print('Prior profile preserved; current workstation inputs are provisioned separately')

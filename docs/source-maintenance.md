@@ -1,19 +1,20 @@
-# Source maintenance
+# Source and maintenance
 
-This is an independent student repository with clean history. Shared runtime
-files come from the upstream maintained lab; student documentation and the
-source manifest identify this distribution. The exact selected content hashes
-and aggregate digest are in `STUDENT-SOURCE-MANIFEST.json`; the recorded upstream
-commit is context, not proof that every exported file came from that commit.
+This is the student distribution of the shared environment. Shared runtime source
+is maintained upstream and exported through an exact reviewed file list; human
+student guides and source-transfer wrappers have student-specific ownership.
+`STUDENT-SOURCE-MANIFEST.json` records authoritative per-file hashes and source
+provenance; `STUDENT-FILES.txt` is the exact transfer list. Do not add local keys,
+provider files, histories or runtime state to that list.
 
-Keep your local changes in your own commits or patches. Do not run source updates
-while an experiment is active. A source export/update must preserve divergent
-tracked and untracked changes and stop for review rather than overwrite them.
-Setup/open also preserve existing installations and edits. `scripts/update.sh`
-and its PowerShell counterpart are full guest provisioning, not everyday open;
-stop OpenCode and understand the change before deliberately using them.
+Keep your own changes in Git. Updates to generated distributions refuse conflicting
+tracked, untracked or committed edits; reconcile work explicitly rather than
+resetting or deleting it. Student source history is independent of instructor
+history. The current network-access model replaces the initial observer-only
+revision: devices can be configured directly, while infrastructure controls stay
+outside the agent environment. See [architecture](architecture.md).
 
-The student file list bounds what is transferred during installation. Never add
-credentials, profiles, generated device state or unrelated files into it.
-Dependency versions/images are pinned in `network/versions.json` and Dockerfiles.
-Any later platform/device updates need their own review and qualification.
+VM updates are explicit and can recreate devices. Stop agents first and retain
+profiles/work. Baseline reset is different from out-of-band recovery and a fresh
+trial; see [the guide](start-here.md). No provider/model request is selected or paid
+for automatically. Generated credentials and trust remain private per-VM data.

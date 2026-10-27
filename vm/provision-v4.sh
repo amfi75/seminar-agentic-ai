@@ -18,6 +18,8 @@ install -m0700 vm/start-v4.sh /usr/local/sbin/seminar-start
 install -m0644 vm/seminar-lab-v4.service /etc/systemd/system/seminar-lab.service
 systemctl daemon-reload
 systemctl enable seminar-lab.service
+touch /var/lib/seminar-lab/rebuild-request
+chmod 0600 /var/lib/seminar-lab/rebuild-request
 systemctl restart seminar-lab.service
 if [[ ! -d /home/student/labs/ui ]]; then /opt/seminar-tools/bin/python management/prepare_ui.py; fi
 python3 management/install_workflow.py

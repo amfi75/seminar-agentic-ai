@@ -47,8 +47,7 @@ def install(source):
     safe_path(control)
     tasks = []
     for label, action in [('Start OpenCode', 'agent'), ('Check network', 'check'), ('Choose scenario', 'scenario'),
-                          ('Review proposed change', 'review'), ('Approve reviewed change', 'approve'),
-                          ('Reset network', 'reset'), ('Start fresh trial', 'fresh'),
+                          ('Reset network', 'reset'), ('Recover devices (preserve agent history)', 'recover'), ('Start fresh trial', 'fresh'),
                           ('Advanced: workload controls', 'traffic')]:
         tasks.append({'label': 'Lab: ' + label, 'type': 'process', 'command': '/usr/local/bin/lab-workflow',
                       'args': [action], 'problemMatcher': [], 'presentation': {'reveal': 'always', 'focus': True, 'panel': 'dedicated'},
@@ -58,11 +57,12 @@ def install(source):
                  'extensions': {'recommendations': ['srl-labs.vscode-containerlab']}}
     payloads = {
         Path('/usr/local/bin/lab-workflow'): ((source / 'workflow.py').read_bytes(), 0o750, 0, group),
+        Path('/usr/local/sbin/lab-recover'): ((source / 'recover_entry.py').read_bytes(), 0o700, 0, 0),
         Path('/usr/local/sbin/lab-fresh-trial'): ((source / 'fresh_trial_entry.py').read_bytes(), 0o700, 0, 0),
         Path('/opt/seminar-lab/management/install_workflow.py'): (Path(__file__).read_bytes(), 0o700, 0, 0),
         control / 'lab.code-workspace': ((json.dumps(workspace, indent=2) + '\n').encode(), 0o600, student.pw_uid, group),
         control / 'START.md': ((source / 'workflow-start.md').read_bytes(), 0o600, student.pw_uid, group),
-        Path('/etc/sudoers.d/seminar-workflow'): (b'student ALL=(root) NOPASSWD: /usr/local/sbin/lab-fresh-trial ""\n', 0o440, 0, 0),
+        Path('/etc/sudoers.d/seminar-workflow'): (b'student ALL=(root) NOPASSWD: /usr/local/sbin/lab-fresh-trial "", /usr/local/sbin/lab-recover ""\n', 0o440, 0, 0),
     }
     # Validate all collisions before writing any payload.
     for path, (data, mode, uid, gid) in payloads.items():
