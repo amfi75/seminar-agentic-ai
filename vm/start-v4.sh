@@ -36,6 +36,8 @@ if [[ "$rebuild" == true ]]; then
  rm -f "$state/rebuild-request"
 fi
 /opt/seminar-tools/bin/python management/wait_devices.py
+# install -d -m0700 above resets named ACL masks on resume; restore the human view.
+python3 management/publish_human_topology.py
 bash management/setup_collection.sh
 /opt/seminar-tools/bin/python management/configure_collectors.py
 systemctl restart seminar-collect

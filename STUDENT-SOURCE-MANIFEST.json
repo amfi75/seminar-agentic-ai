@@ -202,12 +202,12 @@
       "sha256": "7462c92d446f21318cd3d472037f3c85031a7cd12c1b155604b756afe8443e43"
     },
     {
-      "bytes": 3060,
+      "bytes": 2965,
       "mode": 493,
       "ownership": "shared-runtime",
       "path": "management/publish_observer.py",
       "reason": "Original local VM workflow dependency",
-      "sha256": "cda5a58b8ed6bf1b57f2fd65675e8096a36910171c4f0928d132f12613056954"
+      "sha256": "1ec8303dfdcf5f6d8d7954ec77db93b079a6ae7d2f7335a7f20a06af88d86e28"
     },
     {
       "bytes": 920,
@@ -490,12 +490,12 @@
       "sha256": "e4636e7a29c9d48cd18be66a2aaa265651c8b23f426e86bd0b6fb31b0ab2bdbd"
     },
     {
-      "bytes": 2697,
+      "bytes": 2826,
       "mode": 493,
       "ownership": "shared-runtime",
       "path": "vm/start-v4.sh",
       "reason": "Original local VM workflow dependency",
-      "sha256": "5dba5eaa349d3f86ca0a9bbe3b8124e34eb3cef16e90b000b77ff26cf9e67f3b"
+      "sha256": "aa5d011a0e99c4d6b3965e30ffc8b972bfd72c811203f6b4d9bce33a7a396b92"
     },
     {
       "bytes": 475,
@@ -507,7 +507,7 @@
     }
   ],
   "schema": 1,
-  "source_digest": "a63a882cb72894d5c4ad0273d20a6389984a5f783e0dbd192e9c07bbaef5cf38",
+  "source_digest": "87252056a337c01290e319f3b01b64a286963eebdd6bb23d253fa28db23ab34e",
   "source_state": "selected working-tree bytes; per-file hashes authoritative",
   "support": "Export/dependency/recorded transfer checks only; not fresh-VM or desktop qualified",
   "upstream_base_commit": "684293fa796175454182fd983715c088e2259842"
